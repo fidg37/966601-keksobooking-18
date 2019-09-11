@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Nikita Shatskiy](https://up.htmlacademy.ru/javascript/18/user/966601).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Беляев](https://htmlacademy.ru/profile/id691043).
 
 ---
 
