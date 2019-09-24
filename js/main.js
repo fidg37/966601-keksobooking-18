@@ -63,7 +63,120 @@ var createAuthorsArray = function () {
   return authors;
 };
 
+var createOffersArray = function () {
+  var offers = [];
+  for (var i = 0; i < arraysLength; i++) {
+    var x = getRandom (0,300);
+    var y = getRandom (130, 630);
+    var typeRandom = getRandom(1, 4);
+    var checkinRand = getRandom(1, 3);
+    var checkoutRand = getRandom(1, 3);
+    
+    var features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
+    var randomFeaturesArray = [];
+    var photos = ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
+    var randomPhotosArray = [];
+
+    var randomizePhotos = function () {
+      var photosQuantity = getRandom(1, photos.length);
+      for (var j = 0; j < photosQuantity; j++) {
+        var random = getRandom(0, photosQuantity);
+        if (randomPhotosArray.length > 0) {
+          var createPhoto = function() {
+            var random = getRandom(0, photosQuantity);
+            for (y = 0; y < randomPhotosArray.length; y++) {
+              if (randomPhotosArray[y] === photos[random]) {
+                createPhoto();
+                return;
+              }
+            };
+
+            randomPhotosArray[j] = photos[random];
+          };
+          createPhoto();
+        } else {
+          randomPhotosArray[j] = photos[random];
+        }
+      }
+    };
+
+    var randomizeFeatures = function () {
+      var featuresQuantity = getRandom(1, features.length);
+      for (var j = 0; j < featuresQuantity; j++) {
+        var random = getRandom(0, featuresQuantity);
+        if (randomFeaturesArray.length > 0) {
+          var createFeature = function() {
+            var random = getRandom(0, featuresQuantity);
+            for (y = 0; y < randomFeaturesArray.length; y++) {
+              if (randomFeaturesArray[y] === features[random]) {
+                createFeature();
+                return;
+              }
+            };
+
+            randomFeaturesArray[j] = features[random];
+          };
+          createFeature();
+        } else {
+          randomFeaturesArray[j] = features[random];
+        }
+      }
+    };
+    
+    randomizeFeatures();
+    randomizePhotos();
+    
+    offers[i] = {
+      title: 'Title №' + (i + 1)
+    };
+
+    offers[i].address = x + ', ' + y;
+
+    offers[i].price = getRandom(5000, 10000);
+
+    if (typeRandom === 1) {
+      offers[i].type = 'palace';
+    } else if (typeRandom === 2) {
+      offers[i].type = 'flat';
+    } else if (typeRandom === 3) {
+      offers[i].type = 'house';
+    } else {
+      offers[i].type = 'bungalo';
+    }
+
+    offers[i].rooms = getRandom(1, 5);
+
+    offers[i].guests = getRandom(1, 5);
+
+    if (checkinRand === 1) {
+      offers[i].checkin = '12:00';
+    } else if (checkinRand === 2) {
+      offers[i].checkin = '13:00';
+    } else {
+      offers[i].checkin = '14:00';
+    }
+
+    if (checkoutRand === 1) {
+      offers[i].checkout = '12:00';
+    } else if (checkoutRand === 2) {
+      offers[i].checkout = '13:00';
+    } else {
+      offers[i].checkout = '14:00';
+    }
+
+    offers[i].features = randomFeaturesArray;
+
+    offers[i].description = 'Random description №' + (i + 1);
+
+    offers[i].photos = randomPhotosArray;
+
+  };
+
+  return offers;
+};
+
 var createNoticeArray = function () {
 };
 
-console.log(createAuthorsArray());
+
+console.log(createOffersArray());
