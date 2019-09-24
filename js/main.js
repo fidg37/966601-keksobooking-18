@@ -1,5 +1,10 @@
 'use strict'
 var arraysLength = 8;
+
+var authors = [];
+var offers = [];
+var locationsArray = [];
+var notices = [];
 /*
 {
   "author": {
@@ -34,7 +39,6 @@ var getRandom = function (min, max) {
 }
 
 var createAuthorsArray = function () {
-  var authors = [];
   for (var i = 0; i < arraysLength; i++) {
     if (authors.length > 0) {
       var createAvatar = function () {
@@ -59,12 +63,9 @@ var createAuthorsArray = function () {
       };
     }
   };
-  
-  return authors;
 };
 
 var createOffersArray = function () {
-  var offers = [];
   for (var i = 0; i < arraysLength; i++) {
     var x = getRandom (0,300);
     var y = getRandom (130, 630);
@@ -171,12 +172,33 @@ var createOffersArray = function () {
     offers[i].photos = randomPhotosArray;
 
   };
+};
 
-  return offers;
+var createLocationsArray = function () {
+  for (var i = 0; i < arraysLength; i++) {
+    locationsArray[i] = {
+      x: getRandom(0, 400),
+      y: getRandom(130, 630)
+    }
+  };
 };
 
 var createNoticeArray = function () {
+  for (var i = 0; i < arraysLength; i++) {
+    notices[i] = {
+      author: authors[i]
+    };
+    notices[i].offer = offers[i];
+    notices[i].location = locationsArray[i];
+  };
 };
 
+createAuthorsArray();
+createOffersArray();
+createLocationsArray();
+createNoticeArray()
 
-console.log(createOffersArray());
+console.log(authors);
+console.log(offers);
+console.log(locationsArray);
+console.log(notices);
