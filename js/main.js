@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 var arraysLength = 8;
 var map = document.querySelector('.map');
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');;
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinsList = map.querySelector('.map__pins');
 var pinsFragment = document.createDocumentFragment();
 
@@ -14,7 +14,7 @@ var getRandom = function (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 var createAuthorsArray = function () {
   for (var i = 0; i < arraysLength; i++) {
@@ -27,7 +27,7 @@ var createAuthorsArray = function () {
             createAvatar();
             return;
           }
-        };
+        }
 
         authors[i] = {
           avatar: 'img/avatars/user0' + random + '.png'
@@ -40,41 +40,41 @@ var createAuthorsArray = function () {
         avatar: 'img/avatars/user0' + getRandom(1, arraysLength) + '.png'
       };
     }
-  };
+  }
 };
 
 var createOffersArray = function () {
   for (var i = 0; i < arraysLength; i++) {
-    var x = getRandom (0,300);
-    var y = getRandom (130, 630);
+    var x = getRandom(0, 300);
+    var y = getRandom(130, 630);
     var typeRandom = getRandom(1, 4);
     var checkinRand = getRandom(1, 3);
     var checkoutRand = getRandom(1, 3);
-    
-    var features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
+
+    var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
     var randomFeaturesArray = [];
-    var photos = ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
+    var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
     var randomPhotosArray = [];
 
     var randomizePhotos = function () {
       var photosQuantity = getRandom(1, photos.length);
       for (var j = 0; j < photosQuantity; j++) {
-        var random = getRandom(0, photosQuantity);
+        var randomPhoto = getRandom(0, photosQuantity);
         if (randomPhotosArray.length > 0) {
-          var createPhoto = function() {
-            var random = getRandom(0, photosQuantity);
+          var createPhoto = function () {
+            var subRandomPhoto = getRandom(0, photosQuantity);
             for (y = 0; y < randomPhotosArray.length; y++) {
-              if (randomPhotosArray[y] === photos[random]) {
+              if (randomPhotosArray[y] === photos[subRandomPhoto]) {
                 createPhoto();
                 return;
               }
-            };
+            }
 
-            randomPhotosArray[j] = photos[random];
+            randomPhotosArray[j] = photos[subRandomPhoto];
           };
           createPhoto();
         } else {
-          randomPhotosArray[j] = photos[random];
+          randomPhotosArray[j] = photos[randomPhoto];
         }
       }
     };
@@ -82,29 +82,29 @@ var createOffersArray = function () {
     var randomizeFeatures = function () {
       var featuresQuantity = getRandom(1, features.length);
       for (var j = 0; j < featuresQuantity; j++) {
-        var random = getRandom(0, featuresQuantity);
+        var randomFeature = getRandom(0, featuresQuantity);
         if (randomFeaturesArray.length > 0) {
-          var createFeature = function() {
-            var random = getRandom(0, featuresQuantity);
+          var createFeature = function () {
+            var subRandomFeature = getRandom(0, featuresQuantity);
             for (y = 0; y < randomFeaturesArray.length; y++) {
-              if (randomFeaturesArray[y] === features[random]) {
+              if (randomFeaturesArray[y] === features[subRandomFeature]) {
                 createFeature();
                 return;
               }
-            };
+            }
 
-            randomFeaturesArray[j] = features[random];
+            randomFeaturesArray[j] = features[subRandomFeature];
           };
           createFeature();
         } else {
-          randomFeaturesArray[j] = features[random];
+          randomFeaturesArray[j] = features[randomFeature];
         }
       }
     };
-    
+
     randomizeFeatures();
     randomizePhotos();
-    
+
     offers[i] = {
       title: 'Title №' + (i + 1)
     };
@@ -149,7 +149,7 @@ var createOffersArray = function () {
 
     offers[i].photos = randomPhotosArray;
 
-  };
+  }
 };
 
 var createLocationsArray = function () {
@@ -157,8 +157,8 @@ var createLocationsArray = function () {
     locationsArray[i] = {
       x: getRandom(0, 1000),
       y: getRandom(130, 630)
-    }
-  };
+    };
+  }
 };
 
 var createNoticeArray = function () {
@@ -172,7 +172,7 @@ var createNoticeArray = function () {
     };
     notices[i].offer = offers[i];
     notices[i].location = locationsArray[i];
-  };
+  }
 };
 
 var createPin = function (object) {
@@ -183,23 +183,16 @@ var createPin = function (object) {
   pin.querySelector('img').alt = object.offer.title;
 
   return pin;
-}
+};
 
-var createPinsList = function() {
+var createPinsList = function () {
   for (var i = 0; i < arraysLength; i++) {
     pinsFragment.appendChild(createPin(notices[i]));
-  };
+  }
   pinsList.appendChild(pinsFragment);
 };
 
 createNoticeArray();
 createPinsList();
-
-var pin = pinTemplate.cloneNode(true);
-
-console.log(authors);
-console.log(offers);
-console.log(locationsArray);
-console.log(notices);
 
 map.classList.remove('map--faded');
