@@ -159,8 +159,8 @@ var createOffersArray = function () {
 var createLocationsArray = function () {
   for (var i = 0; i < arraysLength; i++) {
     locationsArray[i] = {
-      x: getRandom(0, 1000) - pinGapX,
-      y: getRandom(130, 630) - pinGapY
+      x: getRandom(0, 1000),
+      y: getRandom(130, 630)
     };
   }
 };
@@ -181,8 +181,8 @@ var createNoticeArray = function () {
 
 var createPin = function (object) {
   var pin = pinTemplate.cloneNode(true);
-  pin.style.left = object.location.x + 'px';
-  pin.style.top = object.location.y + 'px';
+  pin.style.left = object.location.x - pinGapX + 'px';
+  pin.style.top = object.location.y - pinGapY + 'px';
   pin.querySelector('img').src = object.author.avatar;
   pin.querySelector('img').alt = object.offer.title;
 
