@@ -159,8 +159,8 @@ var createOffersArray = function () {
 var createLocationsArray = function () {
   for (var i = 0; i < arraysLength; i++) {
     locationsArray[i] = {
-      x: getRandom(0, 1000) + pinGapX,
-      y: getRandom(130, 630) + pinGapY
+      x: getRandom(0, 1000) - pinGapX,
+      y: getRandom(130, 630) - pinGapY
     };
   }
 };
