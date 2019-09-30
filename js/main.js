@@ -13,8 +13,6 @@ var locationsArray = [];
 var notices = [];
 var types = ['palace', 'flat', 'house', 'bungalo'];
 var times = ['12:00', '13:00', '14:00'];
-var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 var getRandom = function (min, max) {
   min = Math.ceil(min);
@@ -62,6 +60,8 @@ var createOffersArray = function () {
   for (var i = 0; i < arraysLength; i++) {
     var x = getRandom(0, 300);
     var y = getRandom(130, 630);
+    var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+    var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
     offers[i] = {
       title: 'Title №' + (i + 1)
@@ -123,4 +123,3 @@ createNoticeArray();
 createPinsList();
 
 map.classList.remove('map--faded');
-
