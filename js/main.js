@@ -32,8 +32,11 @@ var types = ['palace', 'flat', 'house', 'bungalo'];
 var typesTranslate = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
 var times = ['12:00', '13:00', '14:00'];
 var features = ['wifi', 'dishwasher', 'parking', 'washer', 'conditioner', 'elevator'];
-var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-
+var photos = [
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+];
 
 var getRandom = function (min, max) {
   min = Math.ceil(min);
@@ -88,7 +91,7 @@ var createAuthorsArray = function (arrayLength) {
 };
 
 var randomizedArray = function (array) {
-  var initialArray = array;
+  var initialArray = array.slice();
   var randomArray = [];
   var numberRandomElem = getRandom(1, array.length);
 
