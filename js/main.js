@@ -249,21 +249,23 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-guestCapacity.addEventListener('input', function () {
-  guestCapacity.setCustomValidity('');
-});
+var rooms = parseInt(roomNumber.value, 10);
+var guests = parseInt(guestCapacity.value, 10);
 
-roomNumber.addEventListener('input', function () {
-  guestCapacity.setCustomValidity('');
-});
-
-noticeForm.addEventListener('submit', function (evt) {
-
-  var guests = parseInt(guestCapacity.value, 10);
-  var rooms = parseInt(roomNumber.value, 10);
-
-  if (rooms !== guests && guests !== 0) {
-    evt.preventDefault();
+guestCapacity.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value > rooms && guests !== 0) {
     guestCapacity.setCustomValidity('Гостей больше чем комнат');
+  } else {
+    guestCapacity.setCustomValidity('');
+  }
+});
+
+roomNumber.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value < guests && guests !== 0) {
+    guestCapacity.setCustomValidity('Гостей больше чем комнат');
+  } else {
+    guestCapacity.setCustomValidity('');
   }
 });
