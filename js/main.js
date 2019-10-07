@@ -18,9 +18,10 @@ var guestCapacity = noticeForm.querySelector('#capacity');
 var card = cardTemplate.cloneNode(true);
 var cardFeatures = card.querySelectorAll('.popup__feature');
 var featuresCollection = card.querySelectorAll('.popup__feature');
+var mapPinMain = map.querySelector('.map__pin--main');
 
-var MAIN_PIN_WIDTH = 65;
-var MAIN_PIN_HEIGHT = 65;
+var MAIN_PIN_WIDTH = mapPinMain.offsetWidth;
+var MAIN_PIN_HEIGHT = mapPinMain.offsetHeight;
 var PIN_ARROW_GAP = 16;
 var PIN_GAP = MAIN_PIN_WIDTH / 2;
 
