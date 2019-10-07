@@ -18,11 +18,13 @@ var guestCapacity = noticeForm.querySelector('#capacity');
 var card = cardTemplate.cloneNode(true);
 var cardFeatures = card.querySelectorAll('.popup__feature');
 var featuresCollection = card.querySelectorAll('.popup__feature');
-var mapPinMain = map.querySelector('.map__pin--main');
+var submitButton = noticeForm.querySelector('.ad-form__submit');
+var rooms;
+var guests;
 
-var MAIN_PIN_WIDTH = mapPinMain.offsetWidth;
-var MAIN_PIN_HEIGHT = mapPinMain.offsetHeight;
-var PIN_ARROW_GAP = 16;
+var MAIN_PIN_WIDTH = mainPin.offsetWidth;
+var MAIN_PIN_HEIGHT = mainPin.offsetHeight;
+var PIN_ARROW_GAP = window.getComputedStyle(mainPin, ':after').height - 6;
 var PIN_GAP = MAIN_PIN_WIDTH / 2;
 
 var authors = [];
@@ -250,21 +252,11 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-var rooms = parseInt(roomNumber.value, 10);
-var guests = parseInt(guestCapacity.value, 10);
+submitButton.addEventListener('click', function () {
+  rooms = parseInt(roomNumber.value, 10);
+  guests = parseInt(guestCapacity.value, 10);
 
-guestCapacity.addEventListener('input', function (evt) {
-  var target = evt.target;
-  if (target.value > rooms && guests !== 0) {
-    guestCapacity.setCustomValidity('Гостей больше чем комнат');
-  } else {
-    guestCapacity.setCustomValidity('');
-  }
-});
-
-roomNumber.addEventListener('input', function (evt) {
-  var target = evt.target;
-  if (target.value < guests && guests !== 0) {
+  if (guestCapacity.value > rooms && guests !== 0) {
     guestCapacity.setCustomValidity('Гостей больше чем комнат');
   } else {
     guestCapacity.setCustomValidity('');
