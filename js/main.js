@@ -18,10 +18,14 @@ var guestCapacity = noticeForm.querySelector('#capacity');
 var card = cardTemplate.cloneNode(true);
 var cardFeatures = card.querySelectorAll('.popup__feature');
 var featuresCollection = card.querySelectorAll('.popup__feature');
+var submitButton = noticeForm.querySelector('.ad-form__submit');
+var rooms;
+var guests;
+var form = document.querySelector('.ad-form');
 
-var MAIN_PIN_WIDTH = 65;
-var MAIN_PIN_HEIGHT = 65;
-var PIN_ARROW_GAP = 16;
+var MAIN_PIN_WIDTH = mainPin.offsetWidth;
+var MAIN_PIN_HEIGHT = mainPin.offsetHeight;
+var PIN_ARROW_GAP = parseInt(window.getComputedStyle(mainPin, ':after').height, 10) - 6;
 var PIN_GAP = MAIN_PIN_WIDTH / 2;
 
 var authors = [];
@@ -209,6 +213,8 @@ var activatesForms = function () {
   for (var j = 0; j < selectsCollection.length; j++) {
     selectsCollection[j].removeAttribute('disabled');
   }
+
+  form.classList.remove('ad-form--disabled');
 };
 
 var setDefaultAddress = function () {
@@ -234,36 +240,38 @@ createPinsList();
 disablesForms();
 setDefaultAddress();
 
-
-mainPin.addEventListener('mousedown', function () {
+var doingPageActive = function () {
   activatesForms();
   setCurrentAddress();
   map.classList.remove('map--faded');
-});
+};
 
-mainPin.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
-    activatesForms();
-    setCurrentAddress();
-    map.classList.remove('map--faded');
-  }
-});
+var submitClickHandler = function () {
+  rooms = parseInt(roomNumber.value, 10);
+  guests = parseInt(guestCapacity.value, 10);
 
-guestCapacity.addEventListener('input', function () {
-  guestCapacity.setCustomValidity('');
-});
-
-roomNumber.addEventListener('input', function () {
-  guestCapacity.setCustomValidity('');
-});
-
-noticeForm.addEventListener('submit', function (evt) {
-
-  var guests = parseInt(guestCapacity.value, 10);
-  var rooms = parseInt(roomNumber.value, 10);
-
-  if (rooms !== guests && guests !== 0) {
-    evt.preventDefault();
+  if (guestCapacity.value > rooms && guests !== 0) {
     guestCapacity.setCustomValidity('Гостей больше чем комнат');
+  } else {
+    guestCapacity.setCustomValidity('');
   }
-});
+};
+
+var mainPinClickHandler = function () {
+  doingPageActive();
+
+  mainPin.removeEventListener('mousedown', mainPinClickHandler);
+};
+
+var mainPinEnterPressHandler = function (evt) {
+  if (evt.keyCode === 13) {
+    doingPageActive();
+    mainPin.removeEventListener('mousedown', mainPinEnterPressHandler);
+  }
+};
+
+mainPin.addEventListener('mousedown', mainPinClickHandler);
+
+mainPin.addEventListener('keydown', mainPinEnterPressHandler);
+
+submitButton.addEventListener('click', submitClickHandler);
