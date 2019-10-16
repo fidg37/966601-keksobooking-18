@@ -1,12 +1,15 @@
 'use strict';
 (function () {
   window.arraysLength = 8;
-  window.authors = [];
-  window.offers = [];
-  window.locationsArray = [];
   window.notices = [];
-  window.types = ['palace', 'flat', 'house', 'bungalo'];
 
+  var authors = [];
+  var offers = [];
+  var locationsArray = [];
+
+  window.types = ['palace', 'flat', 'house', 'bungalo'];
+  window.typesTranslate = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
+  window.apartmentsCost = [10000, 1000, 5000, 0];
   var times = ['12:00', '13:00', '14:00'];
   var features = ['wifi', 'dishwasher', 'parking', 'washer', 'conditioner', 'elevator'];
   var photos = [
@@ -19,14 +22,14 @@
     var array = [];
     var randomArray = [];
     var firstElem = 1;
-  
+
     for (var i = 0; i < arrayLength; i++) {
       array[i] = firstElem;
       firstElem += 1;
     }
-  
+
     while (array.length !== 0) {
-      var removedElem = array.splice(getRandom(0, array.length - 1), 1);
+      var removedElem = array.splice(window.getRandom(0, array.length - 1), 1);
       randomArray[randomArray.length] = {
         avatar: 'img/avatars/user0' + removedElem[0] + '.png'
       };
@@ -37,59 +40,59 @@
   var randomizedArray = function (array) {
     var initialArray = array.slice();
     var randomArray = [];
-    var numberRandomElem = getRandom(1, array.length);
-  
+    var numberRandomElem = window.getRandom(1, array.length);
+
     for (var i = 0; i < numberRandomElem; i++) {
-      var removedElem = initialArray.splice(getRandom(0, initialArray.length - 1), 1);
+      var removedElem = initialArray.splice(window.getRandom(0, initialArray.length - 1), 1);
       randomArray[randomArray.length] = removedElem[0];
     }
-  
+
     return randomArray;
   };
 
   var getRandArrElem = function (array) {
-    return array[getRandom(0, array.length - 1)];
+    return array[window.getRandom(0, array.length - 1)];
   };
 
   var createOffersArray = function () {
     var x;
     var y;
-  
-    for (var i = 0; i < arraysLength; i++) {
-      x = getRandom(0, 300);
-      y = getRandom(130, 630);
-  
-      window.offers[i] = {
+
+    for (var i = 0; i < window.arraysLength; i++) {
+      x = window.getRandom(0, 300);
+      y = window.getRandom(130, 630);
+
+      offers[i] = {
         title: 'Title №' + (i + 1)
       };
-      window.offers[i].address = x + ', ' + y;
-      window.offers[i].price = getRandom(5000, 10000);
-      window.offers[i].type = getRandArrElem(types);
-      window.offers[i].rooms = getRandom(1, 5);
-      window.offers[i].guests = getRandom(1, 5);
-      window.offers[i].checkin = getRandArrElem(times);
-      window.offers[i].checkout = getRandArrElem(times);
-      window.offers[i].features = randomizedArray(features);
-      window.offers[i].description = 'Random description №' + (i + 1);
-      window.offers[i].photos = randomizedArray(photos);
+      offers[i].address = x + ', ' + y;
+      offers[i].price = window.getRandom(5000, 10000);
+      offers[i].type = getRandArrElem(window.types);
+      offers[i].rooms = window.getRandom(1, 5);
+      offers[i].guests = window.getRandom(1, 5);
+      offers[i].checkin = getRandArrElem(times);
+      offers[i].checkout = getRandArrElem(times);
+      offers[i].features = randomizedArray(features);
+      offers[i].description = 'Random description №' + (i + 1);
+      offers[i].photos = randomizedArray(photos);
     }
   };
 
   var createLocationsArray = function () {
-    for (var i = 0; i < arraysLength; i++) {
-      window.locationsArray[i] = {
-        x: getRandom(0, 1200),
-        y: getRandom(130, 630)
+    for (var i = 0; i < window.arraysLength; i++) {
+      locationsArray[i] = {
+        x: window.getRandom(0, 1200),
+        y: window.getRandom(130, 630)
       };
     }
   };
 
   var createNoticeArray = function () {
-    authors = createAuthorsArray(arraysLength, 0, arraysLength);
+    authors = createAuthorsArray(window.arraysLength, 0, window.arraysLength);
     createOffersArray();
     createLocationsArray();
-  
-    for (var i = 0; i < arraysLength; i++) {
+
+    for (var i = 0; i < window.arraysLength; i++) {
       window.notices[i] = {
         author: authors[i]
       };
