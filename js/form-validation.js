@@ -1,17 +1,17 @@
 'use strict';
 (function () {
-  var roomNumber = window.form.querySelector('#room_number');
-  var guestCapacity = window.form.querySelector('#capacity');
-  var noticeTitle = window.form.querySelector('#title');
-  var price = window.form.querySelector('#price');
-  var apartmentsType = window.form.querySelector('#type');
-  var submitButton = window.form.querySelector('.ad-form__submit');
+  var MAX_PRICE = 1000000;
+
+  var roomNumber = window.util.form.querySelector('#room_number');
+  var guestCapacity = window.util.form.querySelector('#capacity');
+  var noticeTitle = window.util.form.querySelector('#title');
+  var price = window.util.form.querySelector('#price');
+  var apartmentsType = window.util.form.querySelector('#type');
+  var submitButton = window.util.form.querySelector('.ad-form__submit');
   var rooms;
   var guests;
-  var timeIn = window.form.querySelector('#timein');
-  var timeOut = window.form.querySelector('#timeout');
-
-  var MAX_PRICE = 1000000;
+  var timeIn = window.util.form.querySelector('#timein');
+  var timeOut = window.util.form.querySelector('#timeout');
 
   var getCost = function (arrTypes, arrCosts) {
     var cost;
@@ -28,7 +28,7 @@
   var submitClickHandler = function () {
     rooms = parseInt(roomNumber.value, 10);
     guests = parseInt(guestCapacity.value, 10);
-    var cost = getCost(window.types, window.apartmentsCost);
+    var cost = getCost(window.data.apartmentsInfo.types, window.data.apartmentsInfo.cost);
 
     if (guestCapacity.value > rooms && guests !== 0) {
       guestCapacity.setCustomValidity('Гостей больше чем комнат');

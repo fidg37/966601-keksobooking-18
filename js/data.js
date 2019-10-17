@@ -1,15 +1,19 @@
 'use strict';
 (function () {
-  window.arraysLength = 8;
-  window.notices = [];
+  var ARRAYS_LENGTH = 8;
+
+  var notices = [];
 
   var authors = [];
   var offers = [];
   var locationsArray = [];
 
-  window.types = ['palace', 'flat', 'house', 'bungalo'];
-  window.typesTranslate = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
-  window.apartmentsCost = [10000, 1000, 5000, 0];
+  var apartmentsInfo = {
+    types: ['palace', 'flat', 'house', 'bungalo'],
+    typesTranslate: ['Дворец', 'Квартира', 'Дом', 'Бунгало'],
+    cost: [10000, 1000, 5000, 0]
+  };
+
   var times = ['12:00', '13:00', '14:00'];
   var features = ['wifi', 'dishwasher', 'parking', 'washer', 'conditioner', 'elevator'];
   var photos = [
@@ -29,7 +33,7 @@
     }
 
     while (array.length !== 0) {
-      var removedElem = array.splice(window.getRandom(0, array.length - 1), 1);
+      var removedElem = array.splice(window.util.getRandom(0, array.length - 1), 1);
       randomArray[randomArray.length] = {
         avatar: 'img/avatars/user0' + removedElem[0] + '.png'
       };
@@ -37,69 +41,58 @@
     return randomArray;
   };
 
-  var randomizedArray = function (array) {
-    var initialArray = array.slice();
-    var randomArray = [];
-    var numberRandomElem = window.getRandom(1, array.length);
-
-    for (var i = 0; i < numberRandomElem; i++) {
-      var removedElem = initialArray.splice(window.getRandom(0, initialArray.length - 1), 1);
-      randomArray[randomArray.length] = removedElem[0];
-    }
-
-    return randomArray;
-  };
-
-  var getRandArrElem = function (array) {
-    return array[window.getRandom(0, array.length - 1)];
-  };
-
   var createOffersArray = function () {
     var x;
     var y;
 
-    for (var i = 0; i < window.arraysLength; i++) {
-      x = window.getRandom(0, 300);
-      y = window.getRandom(130, 630);
+    for (var i = 0; i < ARRAYS_LENGTH; i++) {
+      x = window.util.getRandom(0, 300);
+      y = window.util.getRandom(130, 630);
 
       offers[i] = {
         title: 'Title №' + (i + 1)
       };
       offers[i].address = x + ', ' + y;
-      offers[i].price = window.getRandom(5000, 10000);
-      offers[i].type = getRandArrElem(window.types);
-      offers[i].rooms = window.getRandom(1, 5);
-      offers[i].guests = window.getRandom(1, 5);
-      offers[i].checkin = getRandArrElem(times);
-      offers[i].checkout = getRandArrElem(times);
-      offers[i].features = randomizedArray(features);
+      offers[i].price = window.util.getRandom(5000, 10000);
+      offers[i].type = window.util.getRandArrElem(apartmentsInfo.types);
+      offers[i].rooms = window.util.getRandom(1, 5);
+      offers[i].guests = window.util.getRandom(1, 5);
+      offers[i].checkin = window.util.getRandArrElem(times);
+      offers[i].checkout = window.util.getRandArrElem(times);
+      offers[i].features = window.util.randomizedArray(features);
       offers[i].description = 'Random description №' + (i + 1);
-      offers[i].photos = randomizedArray(photos);
+      offers[i].photos = window.util.randomizedArray(photos);
     }
   };
 
   var createLocationsArray = function () {
-    for (var i = 0; i < window.arraysLength; i++) {
+    for (var i = 0; i < ARRAYS_LENGTH; i++) {
       locationsArray[i] = {
-        x: window.getRandom(0, 1200),
-        y: window.getRandom(130, 630)
+        x: window.util.getRandom(0, 1200),
+        y: window.util.getRandom(130, 630)
       };
     }
   };
 
   var createNoticeArray = function () {
-    authors = createAuthorsArray(window.arraysLength, 0, window.arraysLength);
+    authors = createAuthorsArray(ARRAYS_LENGTH, 0, ARRAYS_LENGTH);
     createOffersArray();
     createLocationsArray();
 
-    for (var i = 0; i < window.arraysLength; i++) {
-      window.notices[i] = {
+    for (var i = 0; i < ARRAYS_LENGTH; i++) {
+      notices[i] = {
         author: authors[i]
       };
-      window.notices[i].offer = offers[i];
-      window.notices[i].location = locationsArray[i];
+      notices[i].offer = offers[i];
+      notices[i].location = locationsArray[i];
     }
   };
 
   createNoticeArray();
+
+  window.data = {
+    ARRAYS_LENGTH: ARRAYS_LENGTH,
+    notices: notices,
+    apartmentsInfo: apartmentsInfo
+  };
 })();
