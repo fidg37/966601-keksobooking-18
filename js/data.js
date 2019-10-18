@@ -1,18 +1,45 @@
 'use strict';
 (function () {
   var ARRAYS_LENGTH = 8;
+  var MAP_TOP_GAP = 130;
+
+  var map = document.querySelector('.map');
+  var pinsList = map.querySelector('.map__pins');
+
+  var mapDimensions = {
+    maxWidth: pinsList.offsetWidth,
+    minWidth: 0,
+    maxHeight: pinsList.offsetHeight,
+    minHeight: 0
+  };
 
   var notices = [];
-
   var authors = [];
   var offers = [];
   var locationsArray = [];
 
-  var apartmentsInfo = {
-    types: ['palace', 'flat', 'house', 'bungalo'],
-    typesTranslate: ['Дворец', 'Квартира', 'Дом', 'Бунгало'],
-    cost: [10000, 1000, 5000, 0]
-  };
+  var apartmentsInfo = [
+    {
+      type: 'palace',
+      typeTranslate: 'Дворец',
+      cost: 10000
+    },
+    {
+      type: 'flat',
+      typeTranslate: 'Квартира',
+      cost: 1000
+    },
+    {
+      type: 'house',
+      typeTranslate: 'Дом',
+      cost: 5000
+    },
+    {
+      type: 'bungalo',
+      typeTranslate: 'Бунгало',
+      cost: 0
+    }
+  ];
 
   var times = ['12:00', '13:00', '14:00'];
   var features = ['wifi', 'dishwasher', 'parking', 'washer', 'conditioner', 'elevator'];
@@ -46,15 +73,15 @@
     var y;
 
     for (var i = 0; i < ARRAYS_LENGTH; i++) {
-      x = window.util.getRandom(0, 300);
-      y = window.util.getRandom(130, 630);
+      x = window.util.getRandom(mapDimensions.minWidth, mapDimensions.maxWidth);
+      y = window.util.getRandom(MAP_TOP_GAP, mapDimensions.maxHeight);
 
       offers[i] = {
         title: 'Title №' + (i + 1)
       };
       offers[i].address = x + ', ' + y;
-      offers[i].price = window.util.getRandom(5000, 10000);
-      offers[i].type = window.util.getRandArrElem(apartmentsInfo.types);
+      offers[i].price = window.util.getRandom(100, 10000);
+      offers[i].type = window.util.getRandArrElem(apartmentsInfo).type;
       offers[i].rooms = window.util.getRandom(1, 5);
       offers[i].guests = window.util.getRandom(1, 5);
       offers[i].checkin = window.util.getRandArrElem(times);
@@ -68,8 +95,8 @@
   var createLocationsArray = function () {
     for (var i = 0; i < ARRAYS_LENGTH; i++) {
       locationsArray[i] = {
-        x: window.util.getRandom(0, 1200),
-        y: window.util.getRandom(130, 630)
+        x: window.util.getRandom(mapDimensions.minWidth, mapDimensions.maxWidth),
+        y: window.util.getRandom(MAP_TOP_GAP, mapDimensions.maxHeight)
       };
     }
   };
@@ -93,6 +120,9 @@
   window.data = {
     ARRAYS_LENGTH: ARRAYS_LENGTH,
     notices: notices,
-    apartmentsInfo: apartmentsInfo
+    apartmentsInfo: apartmentsInfo,
+    map: map,
+    pinsList: pinsList,
+    mapDimensions: mapDimensions
   };
 })();

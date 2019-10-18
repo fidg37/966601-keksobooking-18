@@ -3,12 +3,7 @@
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
 
-  var map = document.querySelector('.map');
-  var mainPin = document.querySelector('.map__pin--main');
-  var form = document.querySelector('.ad-form');
   var fragment = document.createDocumentFragment();
-  var closeButton;
-  var noticeCard;
 
   var getRandom = function (min, max) {
     min = Math.ceil(min);
@@ -37,11 +32,6 @@
     ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: ENTER_KEYCODE,
     fragment: fragment,
-    map: map,
-    mainPin: mainPin,
-    form: form,
-    closeButton: closeButton,
-    noticeCard: noticeCard,
     getRandom: getRandom,
     randomizedArray: randomizedArray,
     getRandArrElem: getRandArrElem

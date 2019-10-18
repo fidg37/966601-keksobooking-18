@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-  var pinsList = window.util.map.querySelector('.map__pins');
   var pinsCollection;
 
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -21,12 +20,12 @@
       window.util.fragment.appendChild(createPin(window.data.notices[i]));
     }
 
-    pinsList.appendChild(window.util.fragment);
+    window.data.pinsList.appendChild(window.util.fragment);
 
     for (var j = 0; j < window.data.ARRAYS_LENGTH; j++) {
-      pinsCollection = window.util.map.querySelectorAll('[type="button"].map__pin');
-      pinGapX = parseInt(pinsCollection[j].offsetWidth, 10) / 2;
-      pinGapY = parseInt(pinsCollection[j].offsetHeight, 10);
+      pinsCollection = window.data.map.querySelectorAll('[type="button"].map__pin');
+      pinGapX = pinsCollection[j].offsetWidth / 2;
+      pinGapY = pinsCollection[j].offsetHeight;
       pinsCollection[j].style.left = window.data.notices[j].location.x - pinGapX + 'px';
       pinsCollection[j].style.top = window.data.notices[j].location.y - pinGapY + 'px';
     }
@@ -35,7 +34,6 @@
   createPinsList();
 
   window.pin = {
-    pinsList: pinsList,
     pinsCollection: pinsCollection
   };
 })();

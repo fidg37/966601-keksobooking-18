@@ -1,72 +1,97 @@
 'use strict';
 (function () {
-  var MAIN_PIN_WIDTH = window.util.mainPin.offsetWidth;
-  var MAIN_PIN_HEIGHT = window.util.mainPin.offsetHeight;
-  var PIN_ARROW_GAP = parseInt(window.getComputedStyle(window.util.mainPin, ':after').height, 10) - 6;
-  var PIN_GAP = MAIN_PIN_WIDTH / 2;
-
-  var fieldsetsCollection = document.querySelectorAll('fieldset');
-  var selectsCollection = document.querySelectorAll('select');
-  var addressInput = window.util.form.querySelector('#address');
-
-  var disablesForms = function () {
-    for (var i = 0; i < fieldsetsCollection.length; i++) {
-      fieldsetsCollection[i].setAttribute('disabled', '');
-    }
-
-    for (var j = 0; j < selectsCollection.length; j++) {
-      selectsCollection[j].setAttribute('disabled', '');
-    }
-  };
-
-  var activatesForms = function () {
-    for (var i = 0; i < fieldsetsCollection.length; i++) {
-      fieldsetsCollection[i].removeAttribute('disabled');
-    }
-
-    for (var j = 0; j < selectsCollection.length; j++) {
-      selectsCollection[j].removeAttribute('disabled');
-    }
-
-    window.util.form.classList.remove('ad-form--disabled');
-  };
+  var addressInput = window.form.adForm.querySelector('#address');
+  var mainPin = document.querySelector('.map__pin--main');
+  var mainPinWidth = mainPin.offsetWidth;
+  var mainPinHeight = mainPin.offsetHeight;
+  var pinArrowGap = parseInt(window.getComputedStyle(mainPin, ':after').height, 10) - 6;
+  var pinGap = mainPinWidth / 2;
 
   var setDefaultAddress = function () {
-    var pinX = Math.floor(parseInt(window.util.mainPin.style.left, 10) + PIN_GAP);
-    var pinY = Math.floor(parseInt(window.util.mainPin.style.top, 10) + PIN_GAP);
+    var pinX = Math.floor(parseInt(mainPin.style.left, 10) + pinGap);
+    var pinY = Math.floor(parseInt(mainPin.style.top, 10) + pinGap);
     addressInput.value = pinX + ', ' + pinY;
   };
 
   var setCurrentAddress = function () {
-    var pinX = Math.floor(parseInt(window.util.mainPin.style.left, 10) + PIN_GAP);
-    var pinY = Math.floor(parseInt(window.util.mainPin.style.top, 10) + MAIN_PIN_HEIGHT + PIN_ARROW_GAP);
+    var pinX = Math.floor(parseInt(mainPin.style.left, 10) + pinGap);
+    var pinY = Math.floor(parseInt(mainPin.style.top, 10) + mainPinHeight + pinArrowGap);
     addressInput.value = pinX + ', ' + pinY;
   };
 
-  disablesForms();
   setDefaultAddress();
 
   var activatePage = function () {
-    activatesForms();
+    window.form.activatesForms();
     setCurrentAddress();
-    window.util.map.classList.remove('map--faded');
+    window.data.map.classList.remove('map--faded');
   };
 
   var mainPinClickHandler = function () {
     activatePage();
 
-    window.util.mainPin.removeEventListener('mousedown', mainPinClickHandler);
+    mainPin.addEventListener('mousedown', mainPinMouseDownHandler);
+
+    mainPin.removeEventListener('mousedown', mainPinClickHandler);
+  };
+
+  var mainPinMouseDownHandler = function (evt) {
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var mainPinMouseMovefunction = function (moveEvt) {
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      var pinX = parseInt(mainPin.style.left, 10);
+      var pinY = parseInt(mainPin.style.top, 10);
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      if (pinY >= window.data.mapDimensions.minHeight && pinY <= window.data.mapDimensions.maxHeight - mainPinHeight) {
+        mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      } else if (pinY < window.data.mapDimensions.minHeight) {
+        mainPin.style.top = window.data.mapDimensions.minHeight + 'px';
+      } else {
+        mainPin.style.top = window.data.mapDimensions.maxHeight - mainPinHeight + 'px';
+      }
+
+      if (pinX >= window.data.mapDimensions.minWidth && pinX <= window.data.mapDimensions.maxWidth - mainPinWidth) {
+        mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+      } else if (pinX < window.data.mapDimensions.minWidth) {
+        mainPin.style.left = window.data.mapDimensions.minWidth + 'px';
+      } else {
+        mainPin.style.left = window.data.mapDimensions.maxWidth - mainPinWidth + 'px';
+      }
+    };
+
+    var mainPinMouseUpHandler = function () {
+      setCurrentAddress();
+
+      document.removeEventListener('mousemove', mainPinMouseMovefunction);
+      document.removeEventListener('mouseup', mainPinMouseUpHandler);
+    };
+
+    document.addEventListener('mousemove', mainPinMouseMovefunction);
+    document.addEventListener('mouseup', mainPinMouseUpHandler);
   };
 
   var mainPinEnterPressHandler = function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
       activatePage();
-      window.util.mainPin.removeEventListener('mousedown', mainPinEnterPressHandler);
+      mainPin.removeEventListener('mousedown', mainPinEnterPressHandler);
     }
   };
 
-  window.util.mainPin.addEventListener('mousedown', mainPinClickHandler);
-  window.util.mainPin.addEventListener('keydown', mainPinEnterPressHandler);
+  mainPin.addEventListener('mousedown', mainPinClickHandler);
+  mainPin.addEventListener('keydown', mainPinEnterPressHandler);
 
   var setClickEventsOnPins = function (i) {
     window.pin.pinsCollection[i].addEventListener('click', function () {

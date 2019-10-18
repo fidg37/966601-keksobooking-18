@@ -36,8 +36,8 @@
     card = cardTemplate.cloneNode(true);
     featuresCollection = card.querySelectorAll('.popup__feature');
 
-    if (window.util.map.querySelector('.map__card')) {
-      window.util.map.removeChild(window.util.map.querySelector('.map__card'));
+    if (window.data.map.querySelector('.map__card')) {
+      window.data.map.removeChild(window.data.map.querySelector('.map__card'));
     }
 
     card.querySelector('.popup__title').textContent = object.offer.title;
@@ -50,9 +50,9 @@
     addFeatures(featuresCollection, object);
     addPhotos(card, object);
 
-    for (var i = 0; i < window.data.apartmentsInfo.types.length; i++) {
-      if (object.offer.type === window.data.apartmentsInfo.types[i]) {
-        card.querySelector('.popup__type').textContent = window.data.apartmentsInfo.typesTranslate[i];
+    for (var i = 0; i < window.data.apartmentsInfo.length; i++) {
+      if (object.offer.type === window.data.apartmentsInfo[i].type) {
+        card.querySelector('.popup__type').textContent = window.data.apartmentsInfo[i].typeTranslate;
       }
     }
 
