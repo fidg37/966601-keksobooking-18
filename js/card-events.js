@@ -4,7 +4,8 @@
   var noticeCard;
 
   var addCardToPage = function (arrElem) {
-    window.data.pinsList.insertAdjacentElement('afterend', window.util.fragment.appendChild(window.card.createCard(arrElem)));
+    var card = window.card.createCard(arrElem);
+    window.data.pinsList.insertAdjacentElement('afterend', card);
   };
 
   var cardCloseHandler = function () {
