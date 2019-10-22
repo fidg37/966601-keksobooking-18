@@ -3,6 +3,8 @@
   var MAX_PRICE = 1000000;
   var ZERO_GUESTS = 0;
   var ROOMS_NOT_FOR_GUESTS = 100;
+  var MIN_TEXT_LENGTH = 30;
+  var MAX_TEXT_LENGTH = 100;
 
   var roomNumber = window.form.adForm.querySelector('#room_number');
   var guestCapacity = window.form.adForm.querySelector('#capacity');
@@ -46,9 +48,9 @@
       roomNumber.setCustomValidity('');
     }
 
-    if (noticeTitle.value.length < 30) {
+    if (noticeTitle.value.length < MIN_TEXT_LENGTH) {
       noticeTitle.setCustomValidity('Минимальная длина 30 символов');
-    } else if (noticeTitle.value.length > 100) {
+    } else if (noticeTitle.value.length > MAX_TEXT_LENGTH) {
       noticeTitle.setCustomValidity('Максимальная длина 100 символов');
     } else {
       noticeTitle.setCustomValidity('');

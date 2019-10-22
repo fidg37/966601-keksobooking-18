@@ -21,10 +21,23 @@
 
   setDefaultAddress();
 
-  var activatePage = function () {
+  var succsessHandler = function (data) {
+    window.data.map.classList.remove('map--faded');
+    window.data.createNoticeArray(data);
+    window.pin.createPins();
+    setEventsOnPins();
     window.form.activatesForms();
     setCurrentAddress();
-    window.data.map.classList.remove('map--faded');
+  };
+
+  var errorHandler = function () {
+    window.util.createErrorMessage(activatePage);
+  };
+
+  var activatePage = function () {
+    if (window.data.map.classList.contains('map--faded')) {
+      window.load.dataLoad(window.data.SIMILAR_NOTICES_URL, succsessHandler, errorHandler);
+    }
   };
 
   var mainPinClickHandler = function () {
@@ -41,7 +54,7 @@
       y: evt.clientY
     };
 
-    var mainPinMouseMovefunction = function (moveEvt) {
+    var mainPinMouseMoveHandler = function (moveEvt) {
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
@@ -75,11 +88,11 @@
     var mainPinMouseUpHandler = function () {
       setCurrentAddress();
 
-      document.removeEventListener('mousemove', mainPinMouseMovefunction);
+      document.removeEventListener('mousemove', mainPinMouseMoveHandler);
       document.removeEventListener('mouseup', mainPinMouseUpHandler);
     };
 
-    document.addEventListener('mousemove', mainPinMouseMovefunction);
+    document.addEventListener('mousemove', mainPinMouseMoveHandler);
     document.addEventListener('mouseup', mainPinMouseUpHandler);
   };
 
@@ -113,6 +126,4 @@
       setKeydownEventsOnPins(i);
     }
   };
-
-  setEventsOnPins();
 })();
