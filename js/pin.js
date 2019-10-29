@@ -6,6 +6,7 @@
     var pin = pinTemplate.cloneNode(true);
     pin.querySelector('img').src = object.author.avatar;
     pin.querySelector('img').alt = object.offer.title;
+    pin.classList.add('notice-pin');
 
     return pin;
   };

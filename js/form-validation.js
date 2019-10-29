@@ -16,6 +16,7 @@
   var guests;
   var timeIn = window.form.adForm.querySelector('#timein');
   var timeOut = window.form.adForm.querySelector('#timeout');
+  var resetButton = window.form.adForm.querySelector('.ad-form__reset');
 
   var getCost = function (arrInfo) {
     var cost;
@@ -30,6 +31,24 @@
   };
 
   var submitClickHandler = function () {
+    submitEvents();
+  };
+
+  var submitEnterPressHandler = function (evt) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      submitEvents();
+    }
+  };
+
+  var successHandler = function () {
+    window.util.createSuccessMessage();
+    window.form.disablesForms();
+    window.pinsEvents.setActivatePageEvents();
+
+    resetForm();
+  };
+
+  var submitEvents = function () {
     rooms = parseInt(roomNumber.value, 10);
     guests = parseInt(guestCapacity.value, 10);
     var cost = getCost(window.data.apartmentsInfo);
@@ -64,6 +83,12 @@
     } else {
       price.setCustomValidity('');
     }
+
+    window.form.adForm.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+
+      window.upload.dataUpload(new FormData(window.form.adForm), window.data.UPLOAD_URL, successHandler, window.util.createErrorMessage);
+    });
   };
 
   var timeInInputHandler = function () {
@@ -77,4 +102,27 @@
   timeIn.addEventListener('input', timeInInputHandler);
   timeOut.addEventListener('input', timeOutInputHandler);
   submitButton.addEventListener('click', submitClickHandler);
+  submitButton.addEventListener('keydown', submitEnterPressHandler);
+
+  var resetForm = function () {
+    window.form.adForm.reset();
+    window.data.mainPin.style.left = window.form.MAIN_PIN_START_X;
+    window.data.mainPin.style.top = window.form.MAIN_PIN_START_Y;
+    window.pinsEvents.setCurrentAddress();
+  };
+
+  var resetButtonClickHandler = function (evt) {
+    evt.preventDefault();
+    resetForm();
+  };
+
+  var resetButtonPressEnterHandler = function (evt) {
+    evt.preventDefault();
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      resetForm();
+    }
+  };
+
+  resetButton.addEventListener('click', resetButtonClickHandler);
+  resetButton.addEventListener('keydown', resetButtonPressEnterHandler);
 })();

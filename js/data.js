@@ -1,9 +1,11 @@
 'use strict';
 (function () {
-  var SIMILAR_NOTICES_URL = 'https://js.dump.academy/keksobooking/data';
+  var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
+  var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
 
   var map = document.querySelector('.map');
   var pinsList = map.querySelector('.map__pins');
+  var mainPin = document.querySelector('.map__pin--main');
 
   var mapDimensions = {
     maxWidth: pinsList.offsetWidth,
@@ -46,6 +48,8 @@
     pinsList: pinsList,
     mapDimensions: mapDimensions,
     createNoticeArray: createNoticeArray,
-    SIMILAR_NOTICES_URL: SIMILAR_NOTICES_URL
+    LOAD_URL: LOAD_URL,
+    UPLOAD_URL: UPLOAD_URL,
+    mainPin: mainPin
   };
 })();
