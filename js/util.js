@@ -2,8 +2,17 @@
 (function () {
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
+  var SUCCESS_CODE = 200;
+  var TIMEOUT_LIMIT = 10000;
 
   var fragment = document.createDocumentFragment();
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var successClass = '.success';
+  var errorClass = '.error';
+  var currentMessageClass;
+  var messageBlock;
+  var tryAgain;
 
   var getRandom = function (min, max) {
     min = Math.ceil(min);
@@ -28,12 +37,67 @@
     return array[getRandom(0, array.length - 1)];
   };
 
+  var closeMessageBlock = function () {
+    messageBlock.removeEventListener('click', messageBlockClickHandler);
+    document.removeEventListener('keydown', messageBlockPressEscHandler);
+
+    if (tryAgain) {
+      tryAgain.removeEventListener('keydown', tryAgainPressEnterHandler);
+    }
+
+    document.querySelector('main').removeChild(document.querySelector(currentMessageClass));
+  };
+
+  var messageBlockClickHandler = function () {
+    closeMessageBlock();
+  };
+
+  var messageBlockPressEscHandler = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closeMessageBlock();
+    }
+  };
+
+  var tryAgainPressEnterHandler = function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      closeMessageBlock();
+    }
+  };
+
+  var createMessage = function (template, messageClass, isError) {
+    var popup = fragment.appendChild(template);
+
+    document.querySelector('main').appendChild(popup);
+    messageBlock = document.querySelector(messageClass);
+    currentMessageClass = messageClass;
+
+    if (isError) {
+      tryAgain = messageBlock.querySelector('.error__button');
+      tryAgain.addEventListener('keydown', tryAgainPressEnterHandler);
+    }
+
+    messageBlock.addEventListener('click', messageBlockClickHandler);
+    document.addEventListener('keydown', messageBlockPressEscHandler);
+  };
+
+  var createErrorMessage = function () {
+    createMessage(errorTemplate, errorClass, true);
+  };
+
+  var createSuccessMessage = function () {
+    createMessage(successTemplate, successClass, false);
+  };
+
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: ENTER_KEYCODE,
     fragment: fragment,
     getRandom: getRandom,
     randomizedArray: randomizedArray,
-    getRandArrElem: getRandArrElem
+    getRandArrElem: getRandArrElem,
+    createErrorMessage: createErrorMessage,
+    createSuccessMessage: createSuccessMessage,
+    SUCCESS_CODE: SUCCESS_CODE,
+    TIMEOUT_LIMIT: TIMEOUT_LIMIT
   };
 })();
