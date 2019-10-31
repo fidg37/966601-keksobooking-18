@@ -1,9 +1,11 @@
 'use strict';
 (function () {
+  var PIN_ARROW_OFFSET_TOP = 6;
+
   var addressInput = window.form.adForm.querySelector('#address');
   var mainPinWidth = window.data.mainPin.offsetWidth;
   var mainPinHeight = window.data.mainPin.offsetHeight;
-  var pinArrowGap = parseInt(window.getComputedStyle(window.data.mainPin, ':after').height, 10) - 6;
+  var pinArrowGap = parseInt(window.getComputedStyle(window.data.mainPin, ':after').height, 10) - PIN_ARROW_OFFSET_TOP;
   var pinGap = mainPinWidth / 2;
 
   var setDefaultAddress = function () {

@@ -5,7 +5,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (window.util.integerDivision(xhr.status, 100) === window.util.SUCCESS_CODE) {
+      if (xhr.status === window.util.SUCCESS_CODE) {
         onSuccess();
       } else {
         onError();

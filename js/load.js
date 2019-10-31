@@ -6,7 +6,7 @@
     xhr.timeout = window.util.TIMEOUT_LIMIT;
 
     xhr.addEventListener('load', function () {
-      if (window.util.integerDivision(xhr.status, 100) === window.util.SUCCESS_CODE) {
+      if (xhr.status === window.util.SUCCESS_CODE) {
         onSuccess(xhr.response);
       } else {
         onError();

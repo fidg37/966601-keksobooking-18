@@ -2,7 +2,7 @@
 (function () {
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
-  var SUCCESS_CODE = 2;
+  var SUCCESS_CODE = 200;
   var TIMEOUT_LIMIT = 10000;
 
   var fragment = document.createDocumentFragment();
@@ -18,10 +18,6 @@
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  var integerDivision = function (number, denominator) {
-    return (number - number % denominator) / denominator;
   };
 
   var randomizedArray = function (array) {
@@ -101,7 +97,6 @@
     getRandArrElem: getRandArrElem,
     createErrorMessage: createErrorMessage,
     createSuccessMessage: createSuccessMessage,
-    integerDivision: integerDivision,
     SUCCESS_CODE: SUCCESS_CODE,
     TIMEOUT_LIMIT: TIMEOUT_LIMIT
   };
