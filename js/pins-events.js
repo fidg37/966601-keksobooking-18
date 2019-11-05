@@ -24,8 +24,7 @@
 
   var succsessHandler = function (data) {
     window.data.createNoticeArray(data);
-    window.pin.createPins();
-    setEventsOnPins();
+    window.mapFilter.engageFilter();
   };
 
   var errorHandler = function () {
@@ -141,6 +140,7 @@
   window.pinsEvents = {
     setDefaultAddress: setDefaultAddress,
     setCurrentAddress: setCurrentAddress,
-    setActivatePageEvents: setActivatePageEvents
+    setActivatePageEvents: setActivatePageEvents,
+    setEventsOnPins: setEventsOnPins
   };
 })();

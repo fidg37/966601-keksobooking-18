@@ -4,6 +4,7 @@
   var ENTER_KEYCODE = 13;
   var SUCCESS_CODE = 200;
   var TIMEOUT_LIMIT = 10000;
+  var PINS_QUANTITY = 5;
 
   var fragment = document.createDocumentFragment();
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -98,6 +99,7 @@
     createErrorMessage: createErrorMessage,
     createSuccessMessage: createSuccessMessage,
     SUCCESS_CODE: SUCCESS_CODE,
-    TIMEOUT_LIMIT: TIMEOUT_LIMIT
+    TIMEOUT_LIMIT: TIMEOUT_LIMIT,
+    PINS_QUANTITY: PINS_QUANTITY
   };
 })();

@@ -33,7 +33,7 @@
   };
 
   var setCardEvents = function (i) {
-    addCardToPage(window.data.notices[i]);
+    addCardToPage(window.mapFilter.filtratedData[i]);
 
     noticeCard = window.data.map.querySelector('.map__card');
     closeButton = noticeCard.querySelector('.popup__close');

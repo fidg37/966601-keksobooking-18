@@ -6,6 +6,7 @@
   var map = document.querySelector('.map');
   var pinsList = map.querySelector('.map__pins');
   var mainPin = document.querySelector('.map__pin--main');
+  var notices = null;
 
   var mapDimensions = {
     maxWidth: pinsList.offsetWidth,
@@ -38,6 +39,7 @@
   ];
 
   var createNoticeArray = function (data) {
+    notices = data;
     window.data.notices = data;
     window.data.arrayLength = data.length;
   };
@@ -50,6 +52,7 @@
     createNoticeArray: createNoticeArray,
     LOAD_URL: LOAD_URL,
     UPLOAD_URL: UPLOAD_URL,
-    mainPin: mainPin
+    mainPin: mainPin,
+    notices: notices
   };
 })();
