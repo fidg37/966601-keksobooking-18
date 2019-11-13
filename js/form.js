@@ -16,6 +16,13 @@
     }
   };
 
+  var removeCard = function () {
+    if (window.data.map.querySelector('.map__card')) {
+      card = window.data.map.querySelector('.map__card');
+      window.data.map.removeChild(card);
+    }
+  };
+
   var disablesForms = function () {
     window.data.mainPin.style.left = MAIN_PIN_START_X;
     window.data.mainPin.style.top = MAIN_PIN_START_Y;
@@ -24,11 +31,7 @@
     adForm.classList.add('ad-form--disabled');
 
     removePins();
-
-    if (window.data.map.querySelector('.map__card')) {
-      card = window.data.map.querySelector('.map__card');
-      window.data.map.removeChild(card);
-    }
+    removeCard();
 
     for (var i = 0; i < fieldsetsCollection.length; i++) {
       fieldsetsCollection[i].setAttribute('disabled', '');
@@ -59,6 +62,7 @@
     disablesForms: disablesForms,
     MAIN_PIN_START_X: MAIN_PIN_START_X,
     MAIN_PIN_START_Y: MAIN_PIN_START_Y,
-    removePins: removePins
+    removePins: removePins,
+    removeCard: removeCard
   };
 })();
