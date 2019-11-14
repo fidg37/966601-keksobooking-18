@@ -33,23 +33,23 @@
     removePins();
     removeCard();
 
-    for (var i = 0; i < fieldsetsCollection.length; i++) {
-      fieldsetsCollection[i].setAttribute('disabled', '');
-    }
+    fieldsetsCollection.forEach(function (item) {
+      item.setAttribute('disabled', '');
+    });
 
-    for (var j = 0; j < selectsCollection.length; j++) {
-      selectsCollection[j].setAttribute('disabled', '');
-    }
+    selectsCollection.forEach(function (item) {
+      item.setAttribute('disabled', '');
+    });
   };
 
   var activatesForms = function () {
-    for (var i = 0; i < fieldsetsCollection.length; i++) {
-      fieldsetsCollection[i].removeAttribute('disabled');
-    }
+    fieldsetsCollection.forEach(function (item) {
+      item.removeAttribute('disabled');
+    });
 
-    for (var j = 0; j < selectsCollection.length; j++) {
-      selectsCollection[j].removeAttribute('disabled');
-    }
+    selectsCollection.forEach(function (item) {
+      item.removeAttribute('disabled');
+    });
 
     adForm.classList.remove('ad-form--disabled');
   };

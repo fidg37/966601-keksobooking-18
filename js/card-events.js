@@ -10,6 +10,7 @@
 
   var cardCloseHandler = function () {
     window.data.map.removeChild(noticeCard);
+    window.pinsEvents.removePinAccent();
 
     document.removeEventListener('keydown', cardESCpressHandler);
     closeButton.removeEventListener('keydown', closeButtonEnterPressHandler);

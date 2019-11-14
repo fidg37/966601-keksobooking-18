@@ -53,11 +53,11 @@
       addFeatures(featuresCollection, object);
       addPhotos(card, object);
 
-      for (var i = 0; i < window.data.apartmentsInfo.length; i++) {
-        if (object.offer.type === window.data.apartmentsInfo[i].type) {
-          card.querySelector('.popup__type').textContent = window.data.apartmentsInfo[i].typeTranslate;
+      window.data.apartmentsInfo.forEach(function (item) {
+        if (object.offer.type === item.type) {
+          card.querySelector('.popup__type').textContent = item.typeTranslate;
         }
-      }
+      });
     }
     return card;
   };

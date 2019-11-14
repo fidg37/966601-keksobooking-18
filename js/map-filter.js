@@ -5,8 +5,8 @@
   var housingRooms;
   var housingGuests;
   var mapFilter = window.data.map.querySelector('.map__filters');
-  var selectCollection = mapFilter.querySelectorAll('select');
-  var checkboxCollection = mapFilter.querySelectorAll('.map__checkbox');
+  var filterSelectCollection = mapFilter.querySelectorAll('select');
+  var filterCheckboxCollection = mapFilter.querySelectorAll('.map__checkbox');
   var filtratedData;
   var data;
   var checkedCollection;
@@ -27,24 +27,25 @@
   };
 
   var checkFeatures = function (featuresArray, currentFeature) {
-    for (var i = 0; i < featuresArray.length; i++) {
-      if (featuresArray[i] === currentFeature) {
+    return featuresArray.some(function (item) {
+      if (item === currentFeature) {
         return true;
       }
-    }
-    return false;
+
+      return false;
+    });
   };
 
   var checkboxFiltration = function () {
     checkedCollection = mapFilter.querySelectorAll('.map__checkbox:checked');
 
     if (checkedCollection) {
-      for (var i = 0; i < checkedCollection.length; i++) {
+      checkedCollection.forEach(function (item) {
         data = data.filter(function (it) {
           var object = it.offer;
-          return checkFeatures(object.features, checkedCollection[i].value);
+          return checkFeatures(object.features, item.value);
         });
-      }
+      });
     }
   };
 
@@ -75,7 +76,7 @@
   };
 
   var engageFilter = function () {
-    data = window.data.notices.slice();
+    data = window.util.randomizedArray(window.data.notices);
 
     housingType = mapFilter.querySelector('#housing-type').value;
     housingPrice = mapFilter.querySelector('#housing-price').value;
@@ -101,21 +102,33 @@
   };
 
   var setCheckboxEvents = function (j) {
-    checkboxCollection[j].addEventListener('input', filterChangeHandler);
+    filterCheckboxCollection[j].addEventListener('input', filterChangeHandler);
+
+    filterCheckboxCollection[j].addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.util.ENTER_KEYCODE) {
+        if (filterCheckboxCollection[j].getAttribute('checked') !== null) {
+          filterCheckboxCollection[j].removeAttribute('checked');
+        } else {
+          filterCheckboxCollection[j].setAttribute('checked', '');
+        }
+
+        window.util.debounce(engageFilter);
+      }
+    });
   };
 
   var setSelectEvents = function (i) {
-    selectCollection[i].addEventListener('input', filterChangeHandler);
+    filterSelectCollection[i].addEventListener('input', filterChangeHandler);
   };
 
   var setFilterEvents = function () {
-    for (var i = 0; i < selectCollection.length; i++) {
-      setSelectEvents(i);
-    }
+    filterSelectCollection.forEach(function (item, itemNumber) {
+      setSelectEvents(itemNumber);
+    });
 
-    for (var j = 0; j < checkboxCollection.length; j++) {
-      setCheckboxEvents(j);
-    }
+    filterCheckboxCollection.forEach(function (item, itemNumber) {
+      setCheckboxEvents(itemNumber);
+    });
   };
 
   setFilterEvents();
@@ -123,6 +136,7 @@
   window.mapFilter = {
     engageFilter: engageFilter,
     filtratedData: filtratedData,
-    setFilterEvents: setFilterEvents
+    setFilterEvents: setFilterEvents,
+    mapFilter: mapFilter
   };
 }());

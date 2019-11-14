@@ -106,14 +106,17 @@
 
   var resetForm = function () {
     window.form.adForm.reset();
+    window.mapFilter.mapFilter.reset();
     window.data.mainPin.style.left = window.form.MAIN_PIN_START_X;
     window.data.mainPin.style.top = window.form.MAIN_PIN_START_Y;
     window.pinsEvents.setCurrentAddress();
+    window.pinsEvents.setActivatePageEvents();
   };
 
   var resetButtonClickHandler = function (evt) {
     evt.preventDefault();
     resetForm();
+    window.form.disablesForms();
   };
 
   var resetButtonPressEnterHandler = function (evt) {

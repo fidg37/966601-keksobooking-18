@@ -33,9 +33,8 @@
   var randomizedArray = function (array) {
     var initialArray = array.slice();
     var randomArray = [];
-    var numberRandomElem = getRandom(1, array.length);
 
-    for (var i = 0; i < numberRandomElem; i++) {
+    for (var i = 0; i < array.length; i++) {
       var removedElem = initialArray.splice(getRandom(0, initialArray.length - 1), 1);
       randomArray[randomArray.length] = removedElem[0];
     }

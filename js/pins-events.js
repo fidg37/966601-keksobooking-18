@@ -116,9 +116,19 @@
 
   window.data.mainPin.addEventListener('mousedown', mainPinMouseDownHandler);
 
+  var removePinAccent = function () {
+    window.pin.pinsCollection.forEach(function (item) {
+      if (item.classList.contains('map__pin--active')) {
+        item.classList.remove('map__pin--active');
+      }
+    });
+  };
+
   var setClickEventsOnPins = function (i) {
     window.pin.pinsCollection[i].addEventListener('click', function () {
+      removePinAccent();
       window.cardEvents.setCardEvents(i);
+      window.pin.pinsCollection[i].classList.add('map__pin--active');
     });
   };
 
@@ -131,16 +141,17 @@
   };
 
   var setEventsOnPins = function () {
-    for (var i = 0; i < window.pin.pinsCollection.length; i++) {
-      setClickEventsOnPins(i);
-      setKeydownEventsOnPins(i);
-    }
+    window.pin.pinsCollection.forEach(function (item, itemNumber) {
+      setClickEventsOnPins(itemNumber);
+      setKeydownEventsOnPins(itemNumber);
+    });
   };
 
   window.pinsEvents = {
     setDefaultAddress: setDefaultAddress,
     setCurrentAddress: setCurrentAddress,
     setActivatePageEvents: setActivatePageEvents,
-    setEventsOnPins: setEventsOnPins
+    setEventsOnPins: setEventsOnPins,
+    removePinAccent: removePinAccent
   };
 })();
