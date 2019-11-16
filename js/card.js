@@ -6,15 +6,15 @@
   var featuresCollection;
 
   var addFeatures = function (arr, obj) {
-    for (var i = 0; i < arr.length; i++) {
-      arr[i].style.display = 'none';
-      for (var j = 0; j < obj.offer.features.length; j++) {
-        if (arr[i].classList.contains('popup__feature--' + obj.offer.features[j])) {
-          arr[i].style.display = 'inline-block';
-          j = obj.offer.features.length;
+    arr.forEach(function (it) {
+      it.style.display = 'none';
+      for (var i = 0; i < obj.offer.features.length; i++) {
+        if (it.classList.contains('popup__feature--' + obj.offer.features[i])) {
+          it.style.display = 'inline-block';
+          i = obj.offer.features.length;
         }
       }
-    }
+    });
   };
 
   var addPhotos = function (item, obj) {
@@ -63,6 +63,6 @@
   };
 
   window.card = {
-    createCard: createCard
+    create: createCard
   };
 })();

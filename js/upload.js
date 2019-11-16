@@ -22,6 +22,6 @@
   };
 
   window.upload = {
-    dataUpload: dataUpload
+    data: dataUpload
   };
 })();

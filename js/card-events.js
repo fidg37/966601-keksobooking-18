@@ -4,7 +4,7 @@
   var noticeCard;
 
   var addCardToPage = function (arrElem) {
-    var card = window.card.createCard(arrElem);
+    var card = window.card.create(arrElem);
     window.data.pinsList.insertAdjacentElement('afterend', card);
   };
 
@@ -12,7 +12,7 @@
     window.data.map.removeChild(noticeCard);
     window.pinsEvents.removePinAccent();
 
-    document.removeEventListener('keydown', cardESCpressHandler);
+    document.removeEventListener('keydown', cardEscPressHandler);
     closeButton.removeEventListener('keydown', closeButtonEnterPressHandler);
     closeButton.removeEventListener('click', closeButtonClickHandler);
   };
@@ -27,7 +27,7 @@
     cardCloseHandler();
   };
 
-  var cardESCpressHandler = function (evt) {
+  var cardEscPressHandler = function (evt) {
     if (evt.keyCode === window.util.ESC_KEYCODE) {
       cardCloseHandler();
     }
@@ -39,7 +39,7 @@
     noticeCard = window.data.map.querySelector('.map__card');
     closeButton = noticeCard.querySelector('.popup__close');
 
-    document.addEventListener('keydown', cardESCpressHandler);
+    document.addEventListener('keydown', cardEscPressHandler);
     closeButton.addEventListener('keydown', closeButtonEnterPressHandler);
     closeButton.addEventListener('click', closeButtonClickHandler);
   };

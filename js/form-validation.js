@@ -1,22 +1,23 @@
 'use strict';
 (function () {
-  var MAX_PRICE = 1000000;
+  var MAX_COST = 1000000;
   var ZERO_GUESTS = 0;
   var ROOMS_NOT_FOR_GUESTS = 100;
   var MIN_TEXT_LENGTH = 30;
   var MAX_TEXT_LENGTH = 100;
+  var PRICE_DEFAULT_VALUE = 5000;
 
-  var roomNumber = window.form.adForm.querySelector('#room_number');
-  var guestCapacity = window.form.adForm.querySelector('#capacity');
-  var noticeTitle = window.form.adForm.querySelector('#title');
-  var price = window.form.adForm.querySelector('#price');
-  var apartmentsType = window.form.adForm.querySelector('#type');
-  var submitButton = window.form.adForm.querySelector('.ad-form__submit');
+  var roomNumber = window.form.ad.querySelector('#room_number');
+  var guestCapacity = window.form.ad.querySelector('#capacity');
+  var noticeTitle = window.form.ad.querySelector('#title');
+  var price = window.form.ad.querySelector('#price');
+  var apartmentsType = window.form.ad.querySelector('#type');
+  var submitButton = window.form.ad.querySelector('.ad-form__submit');
   var rooms;
   var guests;
-  var timeIn = window.form.adForm.querySelector('#timein');
-  var timeOut = window.form.adForm.querySelector('#timeout');
-  var resetButton = window.form.adForm.querySelector('.ad-form__reset');
+  var timeIn = window.form.ad.querySelector('#timein');
+  var timeOut = window.form.ad.querySelector('#timeout');
+  var resetButton = window.form.ad.querySelector('.ad-form__reset');
 
   var getCost = function (arrInfo) {
     var cost;
@@ -42,10 +43,16 @@
 
   var successHandler = function () {
     window.util.createSuccessMessage();
-    window.form.disablesForms();
+    window.form.disable();
     window.pinsEvents.setActivatePageEvents();
 
     resetForm();
+  };
+
+  var submitHandler = function (evt) {
+    evt.preventDefault();
+    window.serverInteraction.loadOrUpload(window.data.UPLOAD_URL, successHandler, window.util.createErrorMessage, true, new FormData(window.form.ad));
+    window.form.ad.removeEventListener('submit', submitHandler);
   };
 
   var submitEvents = function () {
@@ -68,27 +75,21 @@
     }
 
     if (noticeTitle.value.length < MIN_TEXT_LENGTH) {
-      noticeTitle.setCustomValidity('Минимальная длина 30 символов');
+      noticeTitle.setCustomValidity('Минимальная длина ' + MIN_TEXT_LENGTH + ' символов');
     } else if (noticeTitle.value.length > MAX_TEXT_LENGTH) {
-      noticeTitle.setCustomValidity('Максимальная длина 100 символов');
+      noticeTitle.setCustomValidity('Максимальная длина ' + MAX_TEXT_LENGTH + ' символов');
     } else {
       noticeTitle.setCustomValidity('');
     }
 
     if (price.value < cost) {
-      price.setCustomValidity('Минимальная цена за ночь ' + cost);
       price.setAttribute('placeholder', cost);
-    } else if (parseInt(price.value, 10) > MAX_PRICE) {
-      price.setCustomValidity('Цена за ночь не может превышать 1 000 000');
+      price.setAttribute('min', cost);
     } else {
-      price.setCustomValidity('');
+      price.setAttribute('max', MAX_COST);
     }
 
-    window.form.adForm.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-
-      window.upload.dataUpload(new FormData(window.form.adForm), window.data.UPLOAD_URL, successHandler, window.util.createErrorMessage);
-    });
+    window.form.ad.addEventListener('submit', submitHandler);
   };
 
   var timeInInputHandler = function () {
@@ -105,8 +106,10 @@
   submitButton.addEventListener('keydown', submitEnterPressHandler);
 
   var resetForm = function () {
-    window.form.adForm.reset();
-    window.mapFilter.mapFilter.reset();
+    price.removeAttribute('min');
+    price.setAttribute('placeholder', PRICE_DEFAULT_VALUE);
+    window.form.ad.reset();
+    window.mapFilter.reset();
     window.data.mainPin.style.left = window.form.MAIN_PIN_START_X;
     window.data.mainPin.style.top = window.form.MAIN_PIN_START_Y;
     window.pinsEvents.setCurrentAddress();
@@ -116,7 +119,7 @@
   var resetButtonClickHandler = function (evt) {
     evt.preventDefault();
     resetForm();
-    window.form.disablesForms();
+    window.form.disable();
   };
 
   var resetButtonPressEnterHandler = function (evt) {

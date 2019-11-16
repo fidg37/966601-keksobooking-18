@@ -11,8 +11,8 @@
   var mapDimensions = {
     maxWidth: pinsList.offsetWidth,
     minWidth: 0,
-    maxHeight: pinsList.offsetHeight,
-    minHeight: 0
+    maxHeight: 630,
+    minHeight: 130
   };
 
   var apartmentsInfo = [

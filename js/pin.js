@@ -39,6 +39,6 @@
   };
 
   window.pin = {
-    createPins: createPins,
+    create: createPins,
   };
 })();

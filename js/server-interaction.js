@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var dataLoad = function (url, onSuccess, onError) {
+  var loadOrUpload = function (url, onSuccess, onError, isUpload, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = window.util.TIMEOUT_LIMIT;
@@ -17,11 +17,20 @@
       onError(xhr.status);
     });
 
-    xhr.open('GET', url);
-    xhr.send();
+    if (isUpload) {
+      xhr.open('POST', url);
+      try {
+        xhr.send(data);
+      } catch (err) {
+        onError();
+      }
+    } else {
+      xhr.open('GET', url);
+      xhr.send();
+    }
   };
 
-  window.load = {
-    dataLoad: dataLoad
+  window.serverInteraction = {
+    loadOrUpload: loadOrUpload
   };
 })();

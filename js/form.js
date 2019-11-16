@@ -57,9 +57,9 @@
   disablesForms();
 
   window.form = {
-    adForm: adForm,
-    activatesForms: activatesForms,
-    disablesForms: disablesForms,
+    ad: adForm,
+    activate: activatesForms,
+    disable: disablesForms,
     MAIN_PIN_START_X: MAIN_PIN_START_X,
     MAIN_PIN_START_Y: MAIN_PIN_START_Y,
     removePins: removePins,

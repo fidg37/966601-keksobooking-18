@@ -11,18 +11,22 @@
   var data;
   var checkedCollection;
 
-  var priceRange = {
+  var filterReset = function () {
+    mapFilter.reset();
+  };
+
+  var PriceRange = {
     'low': {
-      min: 0,
-      max: 10000
+      MIN: 0,
+      MAX: 10000
     },
     'middle': {
-      min: 10000,
-      max: 50000
+      MIN: 10000,
+      MAX: 50000
     },
     'high': {
-      min: 50000,
-      max: Infinity
+      MIN: 50000,
+      MAX: Infinity
     }
   };
 
@@ -50,7 +54,7 @@
   };
 
   var checkPriceRange = function (price, rangeValue) {
-    if (priceRange[rangeValue].min <= price && price < priceRange[rangeValue].max) {
+    if (PriceRange[rangeValue].MIN <= price && price < PriceRange[rangeValue].MAX) {
       return true;
     }
     return false;
@@ -93,8 +97,8 @@
     checkboxFiltration();
     window.mapFilter.filtratedData = data;
 
-    window.pin.createPins(window.mapFilter.filtratedData);
-    window.pinsEvents.setEventsOnPins();
+    window.pin.create(window.mapFilter.filtratedData);
+    window.pinsEvents.setEvents();
   };
 
   var filterChangeHandler = function () {
@@ -134,9 +138,8 @@
   setFilterEvents();
 
   window.mapFilter = {
-    engageFilter: engageFilter,
+    engage: engageFilter,
     filtratedData: filtratedData,
-    setFilterEvents: setFilterEvents,
-    mapFilter: mapFilter
+    reset: filterReset
   };
 }());
