@@ -58,6 +58,23 @@
     }
   };
 
+  var moveRestriction = function () {
+    var pinX = parseInt(window.data.mainPin.style.left, 10) + pinGap;
+    var pinY = parseInt(window.data.mainPin.style.top, 10) + mainPinHeight + pinArrowGap;
+
+    if (pinY < window.data.mapDimensions.minHeight) {
+      window.data.mainPin.style.top = window.data.mapDimensions.minHeight - mainPinHeight - pinArrowGap + 'px';
+    } else if (pinY > window.data.mapDimensions.maxHeight) {
+      window.data.mainPin.style.top = window.data.mapDimensions.maxHeight - mainPinHeight - pinArrowGap + 'px';
+    }
+
+    if (pinX < window.data.mapDimensions.minWidth) {
+      window.data.mainPin.style.left = window.data.mapDimensions.minWidth - pinGap + 'px';
+    } else if (pinX > window.data.mapDimensions.maxWidth) {
+      window.data.mainPin.style.left = window.data.mapDimensions.maxWidth - pinGap + 'px';
+    }
+  };
+
   var mainPinMouseDownHandler = function (evt) {
     var startCoords = {
       x: evt.clientX,
@@ -70,32 +87,19 @@
         y: startCoords.y - moveEvt.clientY
       };
 
-      var pinX = parseInt(window.data.mainPin.style.left, 10) + pinGap;
-      var pinY = parseInt(window.data.mainPin.style.top, 10) + mainPinHeight + pinArrowGap;
-
       startCoords = {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
 
-      if (pinY >= window.data.mapDimensions.minHeight && pinY <= window.data.mapDimensions.maxHeight) {
-        window.data.mainPin.style.top = (window.data.mainPin.offsetTop - shift.y) + 'px';
-      } else if (pinY < window.data.mapDimensions.minHeight) {
-        window.data.mainPin.style.top = window.data.mapDimensions.minHeight - mainPinHeight - pinArrowGap + 'px';
-      } else {
-        window.data.mainPin.style.top = window.data.mapDimensions.maxHeight - mainPinHeight - pinArrowGap + 'px';
-      }
+      window.data.mainPin.style.top = (window.data.mainPin.offsetTop - shift.y) + 'px';
+      window.data.mainPin.style.left = (window.data.mainPin.offsetLeft - shift.x) + 'px';
 
-      if (pinX >= window.data.mapDimensions.minWidth && pinX <= window.data.mapDimensions.maxWidth) {
-        window.data.mainPin.style.left = (window.data.mainPin.offsetLeft - shift.x) + 'px';
-      } else if (pinX < window.data.mapDimensions.minWidth) {
-        window.data.mainPin.style.left = window.data.mapDimensions.minWidth - pinGap + 'px';
-      } else {
-        window.data.mainPin.style.left = window.data.mapDimensions.maxWidth - pinGap + 'px';
-      }
+      moveRestriction();
     };
 
     var mainPinMouseUpHandler = function () {
+      moveRestriction();
       setCurrentAddress();
 
       document.removeEventListener('mousemove', mainPinMouseMoveHandler);
