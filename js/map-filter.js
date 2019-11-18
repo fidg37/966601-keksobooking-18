@@ -32,11 +32,7 @@
 
   var checkFeatures = function (featuresArray, currentFeature) {
     return featuresArray.some(function (item) {
-      if (item === currentFeature) {
-        return true;
-      }
-
-      return false;
+      return item === currentFeature;
     });
   };
 
@@ -54,10 +50,7 @@
   };
 
   var checkPriceRange = function (price, rangeValue) {
-    if (PriceRange[rangeValue].MIN <= price && price < PriceRange[rangeValue].MAX) {
-      return true;
-    }
-    return false;
+    return (PriceRange[rangeValue].MIN <= price && price < PriceRange[rangeValue].MAX);
   };
 
   var selectFiltration = function (filterValue, objectKey, isPrice) {

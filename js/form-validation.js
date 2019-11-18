@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var MAX_COST = 1000000;
+  var MIN_COST = 0;
   var ZERO_GUESTS = 0;
   var ROOMS_NOT_FOR_GUESTS = 100;
   var MIN_TEXT_LENGTH = 30;
@@ -23,10 +24,10 @@
   var getCost = function (arrInfo) {
     var cost;
     var type = apartmentsType.value;
-    for (var n = 0; n < arrInfo.length; n++) {
-      if (type === arrInfo[n].type) {
-        cost = arrInfo[n].cost;
-        n = arrInfo.length;
+    for (var i = 0; i < arrInfo.length; i++) {
+      if (type === arrInfo[i].type) {
+        cost = arrInfo[i].cost;
+        i = arrInfo.length;
       }
     }
     return cost;
@@ -56,10 +57,36 @@
     window.form.ad.removeEventListener('submit', submitHandler);
   };
 
+  var titleInputHandler = function () {
+    if (noticeTitle.value.length < MIN_TEXT_LENGTH) {
+      noticeTitle.setCustomValidity('Минимальная длина ' + MIN_TEXT_LENGTH + ' символов');
+    } else if (noticeTitle.value.length > MAX_TEXT_LENGTH) {
+      noticeTitle.setCustomValidity('Максимальная длина ' + MAX_TEXT_LENGTH + ' символов');
+    } else {
+      noticeTitle.setCustomValidity('');
+    }
+  };
+
+  var costInputHandler = function () {
+    var cost = getCost(window.data.apartmentsInfo);
+
+    if (price.value < cost || cost === MIN_COST) {
+      price.setAttribute('placeholder', cost);
+      price.setAttribute('min', cost);
+    } else {
+      price.setAttribute('max', MAX_COST);
+    }
+  };
+
+  noticeTitle.addEventListener('input', titleInputHandler);
+  price.addEventListener('input', costInputHandler);
+  apartmentsType.addEventListener('input', costInputHandler);
+
   var submitEvents = function () {
     rooms = parseInt(roomNumber.value, 10);
     guests = parseInt(guestCapacity.value, 10);
-    var cost = getCost(window.data.apartmentsInfo);
+
+    titleInputHandler();
 
     if (guestCapacity.value > rooms && guests !== ZERO_GUESTS) {
       guestCapacity.setCustomValidity('Гостей больше чем комнат');
@@ -73,21 +100,6 @@
       roomNumber.setCustomValidity('Эти комнаты не для гостей');
     } else {
       roomNumber.setCustomValidity('');
-    }
-
-    if (noticeTitle.value.length < MIN_TEXT_LENGTH) {
-      noticeTitle.setCustomValidity('Минимальная длина ' + MIN_TEXT_LENGTH + ' символов');
-    } else if (noticeTitle.value.length > MAX_TEXT_LENGTH) {
-      noticeTitle.setCustomValidity('Максимальная длина ' + MAX_TEXT_LENGTH + ' символов');
-    } else {
-      noticeTitle.setCustomValidity('');
-    }
-
-    if (price.value < cost) {
-      price.setAttribute('placeholder', cost);
-      price.setAttribute('min', cost);
-    } else {
-      price.setAttribute('max', MAX_COST);
     }
 
     window.form.ad.addEventListener('submit', submitHandler);
