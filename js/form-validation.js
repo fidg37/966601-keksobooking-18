@@ -18,6 +18,7 @@
   var timeIn = window.form.ad.querySelector('#timein');
   var timeOut = window.form.ad.querySelector('#timeout');
   var resetButton = window.form.ad.querySelector('.ad-form__reset');
+  var adImage;
 
   var getCost = function (arrInfo) {
     var cost;
@@ -108,6 +109,13 @@
   var resetForm = function () {
     price.removeAttribute('min');
     price.setAttribute('placeholder', PRICE_DEFAULT_VALUE);
+
+    while (window.photoLoad.adPreview.querySelector('img')) {
+      adImage = window.photoLoad.adPreview.querySelector('img');
+      window.photoLoad.adPreview.removeChild(adImage);
+    }
+
+    window.photoLoad.avatarPreview.src = window.data.DEFAULT_AVATAR;
     window.form.ad.reset();
     window.mapFilter.reset();
     window.data.mainPin.style.left = window.form.MAIN_PIN_START_X;

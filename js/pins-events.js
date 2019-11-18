@@ -6,7 +6,6 @@
   var pinArrowGap = parseInt(window.getComputedStyle(window.data.mainPin, ':after').height, 10);
   var pinGap = mainPinWidth / 2;
 
-
   var setDefaultAddress = function () {
     var pinX = Math.floor(parseInt(window.data.mainPin.style.left, 10) + pinGap);
     var pinY = Math.floor(parseInt(window.data.mainPin.style.top, 10) + pinGap);
@@ -27,7 +26,7 @@
   };
 
   var errorHandler = function () {
-    window.form.disablesForms();
+    window.form.disable();
     window.util.createErrorMessage();
     window.data.mainPin.addEventListener('click', mainPinClickHandler);
     window.data.mainPin.addEventListener('keydown', mainPinEnterPressHandler);
@@ -62,16 +61,16 @@
     var pinX = parseInt(window.data.mainPin.style.left, 10) + pinGap;
     var pinY = parseInt(window.data.mainPin.style.top, 10) + mainPinHeight + pinArrowGap;
 
-    if (pinY < window.data.mapDimensions.minHeight) {
-      window.data.mainPin.style.top = window.data.mapDimensions.minHeight - mainPinHeight - pinArrowGap + 'px';
-    } else if (pinY > window.data.mapDimensions.maxHeight) {
-      window.data.mainPin.style.top = window.data.mapDimensions.maxHeight - mainPinHeight - pinArrowGap + 'px';
+    if (pinY < window.data.MapDimensions.MIN_HEIGHT) {
+      window.data.mainPin.style.top = window.data.MapDimensions.MIN_HEIGHT - mainPinHeight - pinArrowGap + 'px';
+    } else if (pinY > window.data.MapDimensions.MAX_HEIGHT) {
+      window.data.mainPin.style.top = window.data.MapDimensions.MAX_HEIGHT - mainPinHeight - pinArrowGap + 'px';
     }
 
-    if (pinX < window.data.mapDimensions.minWidth) {
-      window.data.mainPin.style.left = window.data.mapDimensions.minWidth - pinGap + 'px';
-    } else if (pinX > window.data.mapDimensions.maxWidth) {
-      window.data.mainPin.style.left = window.data.mapDimensions.maxWidth - pinGap + 'px';
+    if (pinX < window.data.MapDimensions.MIN_WIDTH) {
+      window.data.mainPin.style.left = window.data.MapDimensions.MIN_WIDTH - pinGap + 'px';
+    } else if (pinX > window.data.MapDimensions.MAX_WIDTH) {
+      window.data.mainPin.style.left = window.data.MapDimensions.MAX_WIDTH - pinGap + 'px';
     }
   };
 

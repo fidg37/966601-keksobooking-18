@@ -2,17 +2,18 @@
 (function () {
   var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
   var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
+  var DEFAULT_AVATAR = 'img/muffin-grey.svg';
 
   var map = document.querySelector('.map');
   var pinsList = map.querySelector('.map__pins');
   var mainPin = document.querySelector('.map__pin--main');
   var notices = null;
 
-  var mapDimensions = {
-    maxWidth: pinsList.offsetWidth,
-    minWidth: 0,
-    maxHeight: 630,
-    minHeight: 130
+  var MapDimensions = {
+    MAX_WIDTH: pinsList.offsetWidth,
+    MIN_WIDTH: 0,
+    MAX_HEIGHT: 630,
+    MIN_HEIGHT: 130
   };
 
   var apartmentsInfo = [
@@ -48,11 +49,12 @@
     apartmentsInfo: apartmentsInfo,
     map: map,
     pinsList: pinsList,
-    mapDimensions: mapDimensions,
+    MapDimensions: MapDimensions,
     createNoticeArray: createNoticeArray,
     LOAD_URL: LOAD_URL,
     UPLOAD_URL: UPLOAD_URL,
     mainPin: mainPin,
-    notices: notices
+    notices: notices,
+    DEFAULT_AVATAR: DEFAULT_AVATAR
   };
 })();
