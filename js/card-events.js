@@ -45,6 +45,6 @@
   };
 
   window.cardEvents = {
-    setCardEvents: setCardEvents
+    set: setCardEvents
   };
 })();

@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var ITERATOR_START_NUMBER = 1;
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var photo = cardTemplate.querySelector('.popup__photo');
   var card;
@@ -8,27 +9,29 @@
   var addFeatures = function (arr, obj) {
     arr.forEach(function (it) {
       it.style.display = 'none';
-      for (var i = 0; i < obj.offer.features.length; i++) {
-        if (it.classList.contains('popup__feature--' + obj.offer.features[i])) {
+
+      obj.offer.features.forEach(function (item, number) {
+        if (it.classList.contains('popup__feature--' + obj.offer.features[number])) {
           it.style.display = 'inline-block';
-          i = obj.offer.features.length;
         }
-      }
+      });
     });
   };
 
   var addPhotos = function (item, obj) {
     if (obj.offer.photos.length !== 0) {
-      for (var i = 1; i < obj.offer.photos.length; i++) {
-        var photoClone = photo.cloneNode(true);
-        item.querySelector('.popup__photos').appendChild(photoClone);
-      }
+      obj.offer.photos.forEach(function (it, number) {
+        if (number >= ITERATOR_START_NUMBER) {
+          var photoClone = photo.cloneNode(true);
+          item.querySelector('.popup__photos').appendChild(photoClone);
+        }
+      });
 
       var photosList = card.querySelectorAll('.popup__photo');
 
-      for (var j = 0; j < obj.offer.photos.length; j++) {
-        photosList[j].src = obj.offer.photos[j];
-      }
+      obj.offer.photos.forEach(function (it, number) {
+        photosList[number].src = it;
+      });
     } else {
       item.querySelector('.popup__photos').removeChild(item.querySelector('.popup__photo'));
     }

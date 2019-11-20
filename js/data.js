@@ -4,17 +4,17 @@
   var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
   var DEFAULT_AVATAR = 'img/muffin-grey.svg';
 
-  var map = document.querySelector('.map');
-  var pinsList = map.querySelector('.map__pins');
-  var mainPin = document.querySelector('.map__pin--main');
-  var notices = null;
-
   var MapDimensions = {
     MAX_WIDTH: pinsList.offsetWidth,
     MIN_WIDTH: 0,
     MAX_HEIGHT: 630,
     MIN_HEIGHT: 130
   };
+
+  var map = document.querySelector('.map');
+  var pinsList = map.querySelector('.map__pins');
+  var mainPin = document.querySelector('.map__pin--main');
+  var notices = null;
 
   var apartmentsInfo = [
     {

@@ -1,20 +1,5 @@
 'use strict';
 (function () {
-  var housingType;
-  var housingPrice;
-  var housingRooms;
-  var housingGuests;
-  var mapFilter = window.data.map.querySelector('.map__filters');
-  var filterSelectCollection = mapFilter.querySelectorAll('select');
-  var filterCheckboxCollection = mapFilter.querySelectorAll('.map__checkbox');
-  var filtratedData;
-  var data;
-  var checkedCollection;
-
-  var filterReset = function () {
-    mapFilter.reset();
-  };
-
   var PriceRange = {
     'low': {
       MIN: 0,
@@ -28,6 +13,21 @@
       MIN: 50000,
       MAX: Infinity
     }
+  };
+
+  var housingType;
+  var housingPrice;
+  var housingRooms;
+  var housingGuests;
+  var mapFilter = window.data.map.querySelector('.map__filters');
+  var filterSelectCollection = mapFilter.querySelectorAll('select');
+  var filterCheckboxCollection = mapFilter.querySelectorAll('.map__checkbox');
+  var filtratedData;
+  var data;
+  var checkedCollection;
+
+  var filterReset = function () {
+    mapFilter.reset();
   };
 
   var checkFeatures = function (featuresArray, currentFeature) {

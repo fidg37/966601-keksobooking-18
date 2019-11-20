@@ -24,12 +24,12 @@
   var getCost = function (arrInfo) {
     var cost;
     var type = apartmentsType.value;
-    for (var i = 0; i < arrInfo.length; i++) {
+
+    arrInfo.forEach(function (it, i) {
       if (type === arrInfo[i].type) {
         cost = arrInfo[i].cost;
-        i = arrInfo.length;
       }
-    }
+    });
     return cost;
   };
 

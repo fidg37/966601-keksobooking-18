@@ -129,7 +129,7 @@
   var setClickEventsOnPins = function (i) {
     window.pin.pinsCollection[i].addEventListener('click', function () {
       removePinAccent();
-      window.cardEvents.setCardEvents(i);
+      window.cardEvents.set(i);
       window.pin.pinsCollection[i].classList.add('map__pin--active');
     });
   };
@@ -137,7 +137,7 @@
   var setKeydownEventsOnPins = function (i) {
     window.pin.pinsCollection[i].addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ENTER_KEYCODE) {
-        window.cardEvents.setCardEvents(i);
+        window.cardEvents.set(i);
       }
     });
   };
